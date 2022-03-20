@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -74,5 +75,18 @@ class URLServiceTest {
         assertEquals(tinyURL.getBigURL(), bigURL);
         assertEquals(tinyURL.getEncodedURL(), expectedEncodedURL);
         assertEquals(tinyURL.getShortURL(), expectedShortURL);
+    }
+
+    @Test
+    public void whenEncodedURLNotExist_thenShouldThrowError() throws TinyURLNotFoundException {
+        var urlServiceMock = mock(URLService.class);
+        var encodedURL = "1L9zQeA";
+        when(urlServiceMock.retrieveURLFrom(encodedURL)).thenThrow(TinyURLNotFoundException.class);
+
+
+        assertThrows(TinyURLNotFoundException.class, () -> {
+            urlServiceMock.retrieveURLFrom(encodedURL);
+        });
+
     }
 }
