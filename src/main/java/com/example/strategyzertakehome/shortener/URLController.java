@@ -3,9 +3,12 @@ package com.example.strategyzertakehome.shortener;
 import com.example.strategyzertakehome.error.TinyURLNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @Slf4j
 @RestController
@@ -23,8 +26,8 @@ public class URLController {
     }
 
     @GetMapping(path = "{encodedURL}")
-    public TinyURL resolveShortURL(@PathVariable("encodedURL") String encodedURL) throws TinyURLNotFoundException {
-//        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("https://www.yahoo.com")).build();
-        return urlService.retrieveURLFrom(encodedURL);
+    public ResponseEntity<Void> resolveShortURL(@PathVariable("encodedURL") String encodedURL) throws TinyURLNotFoundException {
+        TinyURL tinyURL = urlService.retrieveURLFrom(encodedURL);
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(tinyURL.getShortURL())).build();
     }
 }
