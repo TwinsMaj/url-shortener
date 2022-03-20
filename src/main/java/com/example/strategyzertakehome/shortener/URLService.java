@@ -37,6 +37,7 @@ public class URLService {
         return shortURLData;
     }
 
+    @Cacheable(cacheNames = {"urldata"}, key = "#encodedURL")
     public TinyURL retrieveURLFrom(String encodedURL) throws TinyURLNotFoundException {
         log.info("i got here");
         var tinyUrl = fetchURL(encodedURL);
@@ -50,6 +51,7 @@ public class URLService {
         return tinyUrl;
     }
 
+    @CacheEvict(value = "urldata", key = "#encodedURL")
     public void deleteURLWith(String encodedUrl, TinyURL tinyURL) {
         urlRepository.delete(tinyURL);
     }
