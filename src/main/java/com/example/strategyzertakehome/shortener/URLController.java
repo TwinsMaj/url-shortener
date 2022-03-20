@@ -28,6 +28,6 @@ public class URLController {
     @GetMapping(path = "{encodedURL}")
     public ResponseEntity<Void> resolveShortURL(@PathVariable("encodedURL") String encodedURL) throws TinyURLNotFoundException {
         TinyURL tinyURL = urlService.retrieveURLFrom(encodedURL);
-        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(tinyURL.getShortURL())).build();
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(tinyURL.getBigURL())).build();
     }
 }
