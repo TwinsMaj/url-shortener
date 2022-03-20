@@ -16,7 +16,7 @@ public class URLController {
     @PostMapping
     @RequestMapping("api/v1/url")
     public TinyURL makeShortUrl(@Valid @RequestBody TinyURL url) {
-        var bigUrl = url.getBigURL();
+        String bigUrl = url.getBigURL();
         log.info("encoding " + bigUrl + "into base62 short URL");
         return urlService.encodeURL(bigUrl);
     }

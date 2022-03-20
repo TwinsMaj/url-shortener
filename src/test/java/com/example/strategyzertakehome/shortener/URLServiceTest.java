@@ -53,11 +53,11 @@ class URLServiceTest {
 
     @Test
     public void whenValidURLGiven_thenTinyURLReturned() {
-        var bigURL = "http://www.yahoo.com";
-        var expectedEncodedURL = "1L9zQeA";
-        var expectedShortURL = "maja.herokuapp.com/1L9zQeA";
+        String bigURL = "http://www.yahoo.com";
+        String expectedEncodedURL = "1L9zQeA";
+        String expectedShortURL = "maja.herokuapp.com/1L9zQeA";
 
-        var tinyURL = urlService.encodeURL(bigURL);
+        TinyURL tinyURL = urlService.encodeURL(bigURL);
 
         assertEquals(tinyURL.getBigURL(), bigURL);
         assertEquals(tinyURL.getEncodedURL(), expectedEncodedURL);
@@ -66,11 +66,11 @@ class URLServiceTest {
 
     @Test
     public void whenEncodedURLGive_thenRetrieveTinyURL() throws TinyURLNotFoundException {
-        var encodedURL = "1L9zQeA";
-        var bigURL = "http://www.yahoo.com";
-        var expectedEncodedURL = "1L9zQeA";
-        var expectedShortURL = "maja.herokuapp.com/1L9zQeA";
-        var tinyURL = urlService.retrieveURLFrom(encodedURL);
+        String encodedURL = "1L9zQeA";
+        String bigURL = "http://www.yahoo.com";
+        String expectedEncodedURL = "1L9zQeA";
+        String expectedShortURL = "maja.herokuapp.com/1L9zQeA";
+        TinyURL tinyURL = urlService.retrieveURLFrom(encodedURL);
 
         assertEquals(tinyURL.getBigURL(), bigURL);
         assertEquals(tinyURL.getEncodedURL(), expectedEncodedURL);
@@ -79,8 +79,8 @@ class URLServiceTest {
 
     @Test
     public void whenEncodedURLNotExist_thenShouldThrowError() throws TinyURLNotFoundException {
-        var urlServiceMock = mock(URLService.class);
-        var encodedURL = "1L9zQeA";
+        URLService urlServiceMock = mock(URLService.class);
+        String encodedURL = "1L9zQeA";
         when(urlServiceMock.retrieveURLFrom(encodedURL)).thenThrow(TinyURLNotFoundException.class);
 
 

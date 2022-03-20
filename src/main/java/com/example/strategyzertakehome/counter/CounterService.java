@@ -17,7 +17,7 @@ public class CounterService {
 
     @Transactional
     public void initializeCounter() {
-        var counter = counterRepository.findAll().stream().findFirst().get();
+        Counter counter = counterRepository.findAll().stream().findFirst().get();
 
         setInitialCount(counter.getCount() + COUNTER_INTERVAL);
         setCurrentCount(getInitialCount() - COUNTER_INTERVAL);

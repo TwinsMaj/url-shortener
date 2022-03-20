@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(TinyURLNotFoundException.class)
     public ResponseEntity<ErrorMessage> TinyURLNotFoundException(TinyURLNotFoundException exception, WebRequest request) {
-        var errorMessage = new ErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
+        ErrorMessage errorMessage = new ErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
     }

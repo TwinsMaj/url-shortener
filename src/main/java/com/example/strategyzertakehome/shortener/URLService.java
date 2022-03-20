@@ -28,10 +28,10 @@ public class URLService {
             counterService.initializeCounter();
         }
 
-        var encodedURL = base62Encoder.toBase62(counterService.getCurrentCount());
-        var shortURL = BASE_URL + encodedURL;
+        String encodedURL = base62Encoder.toBase62(counterService.getCurrentCount());
+        String shortURL = BASE_URL + encodedURL;
 
-        var shortURLData = urlRepository.insert(new TinyURL(encodedURL, shortURL, bigURL, LocalDateTime.now(), getExpiry()));
+        TinyURL shortURLData = urlRepository.insert(new TinyURL(encodedURL, shortURL, bigURL, LocalDateTime.now(), getExpiry()));
         counterService.updateCurrentCount();
         log.info(shortURLData.getBigURL());
         return shortURLData;
@@ -40,11 +40,11 @@ public class URLService {
     @Cacheable(cacheNames = {"urldata"}, key = "#encodedURL")
     public TinyURL retrieveURLFrom(String encodedURL) throws TinyURLNotFoundException {
         log.info("i got here");
-        var tinyUrl = fetchURL(encodedURL);
+        TinyURL tinyUrl = fetchURL(encodedURL);
 
         if(isTinyURLExpired(tinyUrl.getExpiry())) {
             deleteURLWith(encodedURL, tinyUrl);
-            var msg = "Tiny url " + encodedURL + "is expired";
+            String msg = "Tiny url " + encodedURL + "is expired";
             throw new TinyURLNotFoundException(msg);
         }
 
@@ -59,7 +59,7 @@ public class URLService {
     private TinyURL fetchURL(String encodedURL) throws TinyURLNotFoundException {
         return urlRepository.findByEncodedURL(encodedURL)
                 .orElseThrow(() -> {
-                    var msg = "Tiny url " + encodedURL + " does not exist";
+                    String msg = "Tiny url " + encodedURL + " does not exist";
                     log.error(msg);
                     return new TinyURLNotFoundException(msg);
                 });
