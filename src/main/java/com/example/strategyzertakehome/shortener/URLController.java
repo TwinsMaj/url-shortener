@@ -1,11 +1,11 @@
 package com.example.strategyzertakehome.shortener;
 
+import com.example.strategyzertakehome.error.TinyURLNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Slf4j
 @RestController
@@ -15,9 +15,15 @@ public class URLController {
 
     @PostMapping
     @RequestMapping("api/v1/url")
-    public TinyURL makeShortUrl(@RequestBody TinyURL url) {
+    public TinyURL makeShortUrl(@Valid @RequestBody TinyURL url) {
         var bigUrl = url.getBigURL();
         log.info("encoding " + bigUrl + "into base62 short URL");
         return urlService.encodeURL(bigUrl);
+    }
+
+    @GetMapping(path = "{encodedURL}")
+    public TinyURL resolveShortURL(@PathVariable("encodedURL") String encodedURL) throws TinyURLNotFoundException {
+//        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("https://www.yahoo.com")).build();
+        return urlService.retrieveURLFrom(encodedURL);
     }
 }

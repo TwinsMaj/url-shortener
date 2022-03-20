@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class TinyURL implements Serializable {
     private String id;
     private String encodedURL;
     private String shortURL;
+    @URL(message = "please provide valid URL")
     private String bigURL;
     private LocalDateTime created;
     private LocalDateTime expiry;
