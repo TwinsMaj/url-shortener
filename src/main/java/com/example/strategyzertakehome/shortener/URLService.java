@@ -21,7 +21,7 @@ public class URLService {
     private final URLRepository urlRepository;
     private final CounterService counterService;
     private final Base62Encoder base62Encoder;
-    private final String BASE_URL = "maja.herokuapp.com/";
+    private final String BASE_URL = "https://strategyzer-takehome.herokuapp.com/";
 
     public TinyURL encodeURL(String bigURL) {
         if(counterService.isCounterExhausted()) {

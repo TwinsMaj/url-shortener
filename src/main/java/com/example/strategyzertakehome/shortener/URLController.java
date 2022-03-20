@@ -13,6 +13,7 @@ import javax.validation.Valid;
 public class URLController {
     private final URLService urlService;
 
+    @CrossOrigin
     @PostMapping
     @RequestMapping("api/v1/url")
     public TinyURL makeShortUrl(@Valid @RequestBody TinyURL url) {
