@@ -2,6 +2,7 @@ package com.example.strategyzertakehome.shortener;
 
 import com.example.strategyzertakehome.Encoder.Base62Encoder;
 import com.example.strategyzertakehome.counter.CounterService;
+import com.example.strategyzertakehome.error.TinyURLNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -56,6 +57,19 @@ class URLServiceTest {
         var expectedShortURL = "maja.herokuapp.com/1L9zQeA";
 
         var tinyURL = urlService.encodeURL(bigURL);
+
+        assertEquals(tinyURL.getBigURL(), bigURL);
+        assertEquals(tinyURL.getEncodedURL(), expectedEncodedURL);
+        assertEquals(tinyURL.getShortURL(), expectedShortURL);
+    }
+
+    @Test
+    public void whenEncodedURLGive_thenRetrieveTinyURL() throws TinyURLNotFoundException {
+        var encodedURL = "1L9zQeA";
+        var bigURL = "http://www.yahoo.com";
+        var expectedEncodedURL = "1L9zQeA";
+        var expectedShortURL = "maja.herokuapp.com/1L9zQeA";
+        var tinyURL = urlService.retrieveURLFrom(encodedURL);
 
         assertEquals(tinyURL.getBigURL(), bigURL);
         assertEquals(tinyURL.getEncodedURL(), expectedEncodedURL);
